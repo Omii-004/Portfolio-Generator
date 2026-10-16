@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{name} — {title} · NEURAL//CORE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0A0A0F;
+            --line: rgba(255, 255, 255, .1);
+            --ink: #E8E8F0;
+            --muted: #9A9AAE;
+            --violet: #8B5CF6;
+            --cyan: #22D3EE;
+        }
+        body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; background-color: var(--bg); }
+        .mono, .font-mono, code, pre { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+        ::selection { background: rgba(139, 92, 246, .35); color: #fff; }
+
+        /* Subtle technical grid — fades toward the edges */
+        .tech-grid {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
+            background-size: 56px 56px;
+            -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 35%, #000 25%, transparent 78%);
+            mask-image: radial-gradient(ellipse 85% 75% at 50% 35%, #000 25%, transparent 78%);
+        }
+
+        /* Blinking block cursor on hero eyebrow + terminal prompt */
+        .caret { display: inline-block; color: var(--violet); animation: blink 1.1s steps(1) infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Operational status dot */
+        .status-dot {
+            width: 7px; height: 7px; border-radius: 9999px; background: var(--cyan); display: inline-block;
+            animation: pulse-dot 2.2s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, .45); }
+            55% { box-shadow: 0 0 0 6px rgba(34, 211, 238, 0); }
+        }
+
+        /* System cards: corner brackets draw in on hover */
+        .core-card::before, .core-card::after {
+            content: ""; position: absolute; width: 14px; height: 14px;
+            opacity: 0; transition: opacity .25s ease; pointer-events: none;
+        }
+        .core-card::before { top: 9px; left: 9px; border-top: 1px solid rgba(139, 92, 246, .75); border-left: 1px solid rgba(139, 92, 246, .75); }
+        .core-card::after  { bottom: 9px; right: 9px; border-bottom: 1px solid rgba(139, 92, 246, .75); border-right: 1px solid rgba(139, 92, 246, .75); }
+        .core-card:hover::before, .core-card:hover::after { opacity: 1; }
+
+        /* Editorial systems grid: hero project spans full width, rest sit in two columns */
+        .core-systems-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.125rem; }
+        .core-systems-grid > :first-child { grid-column: 1 / -1; }
+
+        /* Anchors clear the fixed nav */
+        section[id] { scroll-margin-top: 88px; }
+
+        a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+            outline: 2px solid var(--violet); outline-offset: 2px; border-radius: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .caret, .status-dot, .tech-grid { animation: none !important; }
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body class="text-gray-200 antialiased">
+
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[60] focus:left-4 focus:top-4 focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:font-mono focus:text-sm">Skip to content</a>
+
+    <!-- Sticky Nav -->
+    <nav class="fixed w-full top-0 z-50 bg-[#0A0A0F]/85 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+            <a href="#main" class="font-mono text-sm tracking-[.15em] text-gray-100 shrink-0">NEURAL<span class="text-violet-400">//</span>CORE</a>
+            <div class="hidden md:flex items-center gap-8 font-mono text-[11px] tracking-[.2em] uppercase text-gray-400">
+                <a href="#about" class="hover:text-violet-300 transition-colors">About</a>
+                <a href="#systems" class="hover:text-violet-300 transition-colors">Systems</a>
+                <a href="#stack" class="hover:text-violet-300 transition-colors">Stack</a>
+                <a href="#journey" class="hover:text-violet-300 transition-colors">Journey</a>
+                <a href="#contact" class="hover:text-violet-300 transition-colors">Contact</a>
+            </div>
+            <a href="{github}" target="_blank" rel="noopener" class="font-mono text-[11px] tracking-[.2em] uppercase text-gray-300 border border-white/15 hover:border-violet-500/60 hover:text-white px-4 py-2 rounded-sm transition-colors">
+                GitHub <span aria-hidden="true">&nearr;</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header id="main" class="relative overflow-hidden">
+        <div class="tech-grid absolute inset-0" aria-hidden="true"></div>
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8 pt-40 md:pt-48 pb-20 lg:pb-28 grid lg:grid-cols-[1.25fr_.75fr] gap-14 lg:gap-20 items-center">
+            <div data-aos="fade-up">
+                <p class="font-mono text-xs md:text-sm tracking-[.3em] uppercase text-violet-400 mb-7">
+                    <span aria-hidden="true">&gt;</span> {title} <span class="caret" aria-hidden="true">_</span>
+                </p>
+                <h1 class="text-4xl sm:text-6xl lg:text-[4.5rem] font-extrabold tracking-tighter leading-[1.02] text-gray-100 uppercase">
+                    BUILDING SYSTEMS<br /> THAT <span class="text-violet-400">THINK</span>
+                </h1>
+                <p class="mt-8 text-gray-400 text-lg md:text-xl leading-relaxed max-w-xl">{summary}</p>
+                <div class="mt-10 flex flex-wrap gap-4">
+                    <a href="#systems" class="bg-violet-500 hover:bg-violet-400 text-black font-semibold px-6 py-3.5 rounded-sm transition-colors duration-200">View systems</a>
+                    <a href="{github}" target="_blank" rel="noopener" class="font-mono text-sm text-gray-200 border border-white/15 hover:border-white/40 px-6 py-3.5 rounded-sm transition-colors duration-200">GITHUB <span aria-hidden="true">&nearr;</span></a>
+                </div>
+            </div>
+
+            <!-- System-status panel -->
+            <div data-aos="fade-up" data-aos-delay="120" aria-label="System status">
+                <div class="border border-white/10 bg-black/40 rounded-sm">
+                    <div class="flex items-center justify-between px-5 py-3 border-b border-white/10">
+                        <span class="font-mono text-[11px] tracking-[.2em] text-gray-400">SYSTEM // STATUS</span>
+                        <span class="font-mono text-[11px] text-gray-600">v1.0.0</span>
+                    </div>
+                    <div class="font-mono text-[13px] px-5 py-6 space-y-3">
+                        <div class="flex justify-between gap-6"><span class="text-gray-500">model</span><span class="text-gray-300">neural-core-v1</span></div>
+                        <div class="flex justify-between gap-6"><span class="text-gray-500">status</span><span class="flex items-center gap-2 text-cyan-300"><span class="status-dot" aria-hidden="true"></span>OPERATIONAL</span></div>
+                        <div class="flex justify-between gap-6"><span class="text-gray-500">role</span><span class="text-gray-300">{title}</span></div>
+                        <div class="flex justify-between gap-6"><span class="text-gray-500">stack</span><span class="text-gray-300">ML · infra · web</span></div>
+                        <div class="flex justify-between gap-6"><span class="text-gray-500">repo</span><a href="{github}" target="_blank" rel="noopener" class="text-violet-400 hover:text-white break-all transition-colors">{github}</a></div>
+                    </div>
+                    <div class="border-t border-white/10 px-5 py-3 font-mono text-[13px] text-gray-500"><span class="text-violet-400">$</span> <span class="caret" aria-hidden="true">&#9614;</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="relative pb-12 flex justify-center" aria-hidden="true">
+            <div class="flex flex-col items-center gap-3 text-gray-600">
+                <span class="font-mono text-[10px] tracking-[.3em] uppercase">Scroll</span>
+                <div class="w-px h-10 bg-gradient-to-b from-gray-600 to-transparent"></div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 lg:px-8 pt-2 pb-24">
+
+        {section_about}
+        {section_projects}
+        {section_skills}
+        {section_experience}
+        {section_education}
+        {section_certifications}
+        {section_languages}
+
+        <!-- Source -->
+        <section id="github" class="mb-20 md:mb-28" data-aos="fade-up">
+            <p class="font-mono text-xs tracking-[.35em] uppercase text-violet-400 mb-6">05 / Source</p>
+            <div class="border border-white/10 rounded-sm divide-y divide-white/10">
+                <a href="{github}" target="_blank" rel="noopener" class="group flex items-center justify-between gap-6 px-6 md:px-8 py-6 hover:bg-white/[0.03] transition-colors duration-200">
+                    <div>
+                        <p class="font-mono text-xs text-gray-600">01</p>
+                        <p class="mt-1 text-lg font-semibold text-gray-100 group-hover:text-violet-300 transition-colors">GitHub</p>
+                        <p class="text-sm text-gray-500 mt-1">Open source, experiments, notebooks</p>
+                    </div>
+                    <span class="font-mono text-base text-violet-400 group-hover:text-white transition-colors" aria-hidden="true">&nearr;</span>
+                </a>
+                <a href="{linkedin}" target="_blank" rel="noopener" class="group flex items-center justify-between gap-6 px-6 md:px-8 py-6 hover:bg-white/[0.03] transition-colors duration-200">
+                    <div>
+                        <p class="font-mono text-xs text-gray-600">02</p>
+                        <p class="mt-1 text-lg font-semibold text-gray-100 group-hover:text-violet-300 transition-colors">LinkedIn</p>
+                        <p class="text-sm text-gray-500 mt-1">Professional network, writing, talks</p>
+                    </div>
+                    <span class="font-mono text-base text-violet-400 group-hover:text-white transition-colors" aria-hidden="true">&nearr;</span>
+                </a>
+                <a href="mailto:{email}" class="group flex items-center justify-between gap-6 px-6 md:px-8 py-6 hover:bg-white/[0.03] transition-colors duration-200">
+                    <div>
+                        <p class="font-mono text-xs text-gray-600">03</p>
+                        <p class="mt-1 text-lg font-semibold text-gray-100 group-hover:text-violet-300 transition-colors">Email</p>
+                        <p class="text-sm text-gray-500 mt-1 break-all">{email}</p>
+                    </div>
+                    <span class="font-mono text-base text-violet-400 group-hover:text-white transition-colors" aria-hidden="true">&nearr;</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" data-aos="fade-up">
+            <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-12 items-start">
+                <div>
+                    <p class="font-mono text-xs tracking-[.35em] uppercase text-violet-400 mb-6">06 / Contact</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-gray-100">Open to work<br />on <span class="text-violet-400">hard problems</span></h2>
+                    <p class="mt-5 text-gray-400 leading-relaxed max-w-md">Research collaboration, applied ML, or building the next thing — the inbox is open.</p>
+                    <div class="mt-8 font-mono text-sm space-y-3">{contact_meta}</div>
+                </div>
+                <form action="https://formspree.io/f/your_formspree_id" method="POST" class="border border-white/10 bg-black/30 rounded-sm px-6 py-8 md:px-10 space-y-6">
+                    <input type="hidden" name="_subject" value="NEURAL//CORE — new message">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="core-name" class="block font-mono text-[11px] uppercase tracking-[.2em] text-gray-500 mb-2">Name</label>
+                            <input id="core-name" type="text" name="name" required placeholder="Ada Lovelace"
+                                class="w-full px-4 py-3 bg-white/[0.02] border border-white/10 rounded-sm text-gray-200 placeholder:text-gray-600 focus:border-violet-500/60 transition-colors">
+                        </div>
+                        <div>
+                            <label for="core-email" class="block font-mono text-[11px] uppercase tracking-[.2em] text-gray-500 mb-2">Email</label>
+                            <input id="core-email" type="email" name="email" required placeholder="you@work.com"
+                                class="w-full px-4 py-3 bg-white/[0.02] border border-white/10 rounded-sm text-gray-200 placeholder:text-gray-600 focus:border-violet-500/60 transition-colors">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="core-message" class="block font-mono text-[11px] uppercase tracking-[.2em] text-gray-500 mb-2">Message</label>
+                        <textarea id="core-message" name="message" rows="5" required placeholder="Tell me about the problem you are solving…"
+                            class="w-full px-4 py-3 bg-white/[0.02] border border-white/10 rounded-sm text-gray-200 placeholder:text-gray-600 focus:border-violet-500/60 resize-none transition-colors"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full md:w-auto bg-violet-500 hover:bg-violet-400 text-black font-semibold px-8 py-3.5 rounded-sm transition-colors">
+                        Send message <span class="font-mono ml-2" aria-hidden="true">→</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="font-mono text-xs tracking-[.2em] uppercase text-gray-500">NEURAL<span class="text-violet-400">//</span>CORE</p>
+            <p class="font-mono text-xs text-gray-600">&copy; 2026 {name} · built with PortfoliAI</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            AOS.init({ disable: true });
+        } else {
+            AOS.init({ duration: 700, once: true, offset: 100 });
+        }
+    </script>
+</body>
+</html>

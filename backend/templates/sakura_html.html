@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{name} — SAKURA//FLOW</title>
+  <meta name="description" content="{summary}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <style>
+    :root {
+      --cream: #FCFAF7;
+      --sakura: #EBCED3;
+      --rose: #C98291;
+      --ink: #282525;
+      --taupe: #7D6A63;
+      --moss: #B6C1A8;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      /* subtle paper grain */
+      background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    }
+    .font-editorial { font-family: 'Cormorant Garamond', Georgia, serif; }
+    .font-body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; }
+
+    /* Section kicker: "01 / ABOUT" */
+    .sk {
+      font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+      font-size: 11px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 600;
+    }
+    .sk::before {
+      content: "";
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: var(--rose);
+      vertical-align: middle;
+      margin-right: 10px;
+      opacity: .5;
+    }
+
+    section[id] { scroll-margin-top: 96px; }
+    ::selection { background: #F5D9DE; color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+
+    /* Underline hover */
+    .ulnk {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: background-size .45s ease;
+      padding-bottom: 2px;
+    }
+    .ulnk:hover { background-size: 100% 1px; }
+
+    /* Branch draw-on */
+    .branch-path {
+      stroke-dasharray: 1800;
+      stroke-dashoffset: 1800;
+      animation: branch-draw 3s ease-out 0.3s forwards;
+    }
+    .branch-path-2 {
+      stroke-dasharray: 900;
+      stroke-dashoffset: 900;
+      animation: branch-draw 2.2s ease-out 0.8s forwards;
+    }
+    .branch-path-3 {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: branch-draw 1.8s ease-out 1.2s forwards;
+    }
+    @keyframes branch-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* Blossom bloom */
+    .blossom {
+      opacity: 0;
+      animation: blossom-in 1.4s ease-out forwards;
+    }
+    .blossom-d1 { animation-delay: 1.8s; }
+    .blossom-d2 { animation-delay: 2.2s; }
+    .blossom-d3 { animation-delay: 2.5s; }
+    .blossom-d4 { animation-delay: 2.8s; }
+    .blossom-d5 { animation-delay: 3.1s; }
+    @keyframes blossom-in {
+      0% { opacity: 0; transform: scale(0.4) rotate(-20deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    }
+
+    /* Falling petals */
+    .petal {
+      animation: petal-fall linear infinite;
+      will-change: transform;
+    }
+    @keyframes petal-fall {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+      }
+      5%  { opacity: .7; }
+      90% { opacity: .7; }
+      100% {
+        transform: translateY(420px) translateX(40px) rotate(120deg);
+        opacity: 0;
+      }
+    }
+    .petal-d1 { left: 28%; animation-duration: 8s; animation-delay: 1s; }
+    .petal-d2 { left: 52%; animation-duration: 9.5s; animation-delay: 2.5s; }
+    .petal-d3 { left: 68%; animation-duration: 7.5s; animation-delay: 4s; }
+    .petal-d4 { left: 38%; animation-duration: 10s; animation-delay: 6s; }
+
+    /* Gentle sway for in-place elements */
+    .sway {
+      animation: sway 6s ease-in-out infinite;
+    }
+    .sway-d1 { animation-delay: -2s; }
+    @keyframes sway {
+      0%, 100% { transform: rotate(0deg) translateY(0); }
+      50% { transform: rotate(3deg) translateY(-4px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .branch-path, .branch-path-2, .branch-path-3,
+      .blossom, .petal, .sway {
+        animation: none !important;
+        opacity: 1 !important;
+        stroke-dashoffset: 0 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#top" class="sr-only focus:not-sr-only focus:fixed focus:inset-x-0 focus:top-0 focus:z-[100] focus:bg-[#282525] focus:text-[#FCFAF7] focus:px-6 focus:py-3 focus:text-center">Skip to content</a>
+
+  <!-- Desktop top bar -->
+  <header class="hidden lg:flex fixed top-0 inset-x-0 z-50 items-center justify-between border-b border-[#EBCED3]/60 bg-[#FCFAF7]/90 backdrop-blur-xl px-12 py-4">
+    <a href="#top" class="font-editorial text-xl tracking-tight text-[#282525]">SAKURA<span class="text-[#C98291]">//FLOW</span></a>
+    <nav aria-label="Primary" class="flex items-center gap-9">
+      <a href="#about" class="ulnk text-[11px] uppercase tracking-[.2em] font-medium text-[#7D6A63] hover:text-[#C98291] transition-colors">About</a>
+      <a href="#work" class="ulnk text-[11px] uppercase tracking-[.2em] font-medium text-[#7D6A63] hover:text-[#C98291] transition-colors">Work</a>
+      <a href="#expertise" class="ulnk text-[11px] uppercase tracking-[.2em] font-medium text-[#7D6A63] hover:text-[#C98291] transition-colors">Expertise</a>
+      <a href="#journey" class="ulnk text-[11px] uppercase tracking-[.2em] font-medium text-[#7D6A63] hover:text-[#C98291] transition-colors">Journey</a>
+      <a href="#contact" class="ulnk text-[11px] uppercase tracking-[.2em] font-medium text-[#C98291] font-semibold">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Mobile sticky bar -->
+  <header class="lg:hidden fixed top-0 inset-x-0 z-50 flex items-center justify-between border-b border-[#EBCED3]/60 bg-[#FCFAF7]/90 backdrop-blur-xl px-5 py-3.5">
+    <a href="#top" class="font-editorial text-lg tracking-tight text-[#282525]">SAKURA<span class="text-[#C98291]">//FLOW</span></a>
+    <nav aria-label="Primary" class="flex gap-4">
+      <a href="#about" class="text-[10px] uppercase tracking-[.15em] text-[#7D6A63] hover:text-[#C98291]">About</a>
+      <a href="#work" class="text-[10px] uppercase tracking-[.15em] text-[#7D6A63] hover:text-[#C98291]">Work</a>
+      <a href="#contact" class="text-[10px] uppercase tracking-[.15em] text-[#C98291]">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ======================= HERO ======================= -->
+    <header class="relative min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-16 pt-24 pb-16 overflow-hidden">
+
+      <!-- Falling petals (decorative, behind content) -->
+      <div class="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
+        <svg class="petal petal-d1 absolute top-8 w-5 text-[#EBCED3]" viewBox="0 0 24 32" fill="currentColor"><path d="M12 0C12 12 2 20 12 32C22 20 12 12 12 0Z"/></svg>
+        <svg class="petal petal-d2 absolute top-4 w-4 text-[#C98291]/50" viewBox="0 0 24 32" fill="currentColor"><path d="M12 0C12 12 2 20 12 32C22 20 12 12 12 0Z"/></svg>
+        <svg class="petal petal-d3 absolute top-12 w-3.5 text-[#EBCED3]/70" viewBox="0 0 24 32" fill="currentColor"><path d="M12 0C12 12 2 20 12 32C22 20 12 12 12 0Z"/></svg>
+        <svg class="petal petal-d4 absolute top-2 w-4 text-[#C98291]/40" viewBox="0 0 24 32" fill="currentColor"><path d="M12 0C12 12 2 20 12 32C22 20 12 12 12 0Z"/></svg>
+      </div>
+
+      <div class="relative z-10 grid lg:grid-cols-12 gap-12 lg:gap-6 items-center">
+
+        <!-- Left: copy -->
+        <div class="lg:col-span-7" data-aos="fade-up">
+          <p class="sk">Portfolio &mdash; {title}</p>
+          <h1 class="font-editorial text-6xl sm:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-tight mt-7 text-[#282525]">
+            I&rsquo;m<br />
+            <span class="text-[#C98291]">{name}</span>
+          </h1>
+          <p class="mt-8 max-w-xl text-[17px] leading-[1.75] text-[#7D6A63]">{summary}</p>
+          <div class="mt-11 flex flex-wrap items-center gap-8">
+            <a href="#work" class="ulnk text-[12px] uppercase tracking-[.22em] font-semibold text-[#C98291]">View selected work &darr;</a>
+            <a href="mailto:{email}" class="inline-flex items-center gap-2 border border-[#C98291]/60 px-7 py-3 text-[12px] uppercase tracking-[.2em] font-semibold text-[#C98291] hover:bg-[#C98291] hover:text-[#FCFAF7] transition-colors duration-300">
+              <span>Get in touch</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: cherry blossom branch composition -->
+        <div class="lg:col-span-5 relative flex items-center justify-center py-10 lg:py-0" data-aos="fade-up" data-aos-delay="150">
+          <div class="relative w-[280px] h-[380px] sm:w-[320px] sm:h-[440px]">
+            <svg viewBox="0 0 260 400" fill="none" class="w-full h-full" aria-hidden="true">
+              <!-- Main branch -->
+              <path d="M130 400 Q130 320 125 260 Q120 200 128 150 Q134 110 130 60"
+                    stroke="#C98291" stroke-width="1.8" stroke-linecap="round" opacity=".35" class="branch-path" />
+              <!-- Branch fork right -->
+              <path d="M128 180 Q155 140 180 100 Q195 75 200 50"
+                    stroke="#C98291" stroke-width="1.2" stroke-linecap="round" opacity=".3" class="branch-path-2" />
+              <!-- Branch fork left -->
+              <path d="M125 230 Q100 195 80 160 Q68 138 55 115"
+                    stroke="#C98291" stroke-width="1" stroke-linecap="round" opacity=".25" class="branch-path-3" />
+              <!-- Small twig -->
+              <path d="M130 100 Q145 82 155 65"
+                    stroke="#C98291" stroke-width=".8" stroke-linecap="round" opacity=".2" class="branch-path-3" />
+
+              <!-- Blossoms (circles that bloom in) -->
+              <circle cx="130" cy="58" r="10" fill="#EBCED3" opacity=".5" class="blossom blossom-d1" />
+              <circle cx="130" cy="58" r="5" fill="#C98291" opacity=".4" class="blossom blossom-d1" />
+
+              <circle cx="200" cy="48" r="9" fill="#EBCED3" opacity=".5" class="blossom blossom-d2" />
+              <circle cx="200" cy="48" r="4.5" fill="#C98291" opacity=".4" class="blossom blossom-d2" />
+
+              <circle cx="55" cy="113" r="8" fill="#EBCED3" opacity=".45" class="blossom blossom-d3" />
+              <circle cx="55" cy="113" r="4" fill="#C98291" opacity=".35" class="blossom blossom-d3" />
+
+              <circle cx="155" cy="63" r="7" fill="#EBCED3" opacity=".4" class="blossom blossom-d4" />
+              <circle cx="155" cy="63" r="3.5" fill="#C98291" opacity=".3" class="blossom blossom-d4" />
+
+              <circle cx="175" cy="102" r="6.5" fill="#B6C1A8" opacity=".35" class="blossom blossom-d5" />
+
+              <!-- Small accent petal dots -->
+              <circle cx="110" cy="180" r="3" fill="#EBCED3" opacity=".3" class="blossom blossom-d3" />
+              <circle cx="145" cy="140" r="2.5" fill="#C98291" opacity=".2" class="blossom blossom-d4" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40" aria-hidden="true">
+        <span class="text-[10px] uppercase tracking-[.25em] text-[#7D6A63]">Scroll</span>
+        <span class="w-px h-8 bg-[#C98291]/40"></span>
+      </div>
+    </header>
+
+    {section_about}
+    {section_projects}
+    {section_skills}
+    {section_journey}
+
+    <!-- ======================= PHILOSOPHY ======================= -->
+    <section class="px-6 sm:px-10 lg:px-16 mb-24 md:mb-36">
+      <div class="relative max-w-4xl mx-auto text-center py-24 md:py-32 border-y border-[#EBCED3]/60" data-aos="fade-up">
+        <!-- decorative blossom behind -->
+        <svg class="sway absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 text-[#EBCED3]/30 pointer-events-none" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+          <path d="M32 58C32 46 22 34 32 18C42 34 32 46 32 58Z"/>
+          <path d="M32 58C40 46 48 35 52 22C43 31 37 44 32 58Z"/>
+          <path d="M32 58C24 46 16 35 12 22C21 31 27 44 32 58Z"/>
+        </svg>
+        <p class="sk relative">05 / Philosophy</p>
+        <blockquote class="font-editorial italic text-3xl md:text-5xl leading-[1.18] mt-8 text-[#282525] relative">
+          &ldquo;Creativity flows like water &mdash;<br />it finds form through <span class="text-[#C98291]">stillness</span>.&rdquo;
+        </blockquote>
+        <p class="mt-10 mx-auto max-w-xl text-[16px] leading-relaxed text-[#7D6A63] relative">{summary}</p>
+        <p class="mt-8 sk relative">&mdash; {name}</p>
+      </div>
+    </section>
+
+    {section_contact}
+
+    <!-- ======================= FOOTER ======================= -->
+    <footer class="px-6 sm:px-10 lg:px-16 py-14 border-t border-[#EBCED3]/60 text-center">
+      <a href="#top" class="font-editorial text-2xl text-[#282525]">SAKURA<span class="text-[#C98291]">//FLOW</span></a>
+      <p class="mt-4 text-[11px] uppercase tracking-[.22em] text-[#7D6A63]">&#169; 2026 {name} &mdash; Crafted with care.</p>
+    </footer>
+  </main>
+
+  <script>
+    AOS.init({
+      duration: 800,
+      offset: 80,
+      once: true,
+      disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    });
+  </script>
+</body>
+</html>

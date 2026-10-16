@@ -1,0 +1,82 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+/* These variables help our app look smooth when transitioning between dark and light mode */
+html, body, #root {
+  height: 100%;
+}
+
+/* anchor links from the navbar scroll the viewport, not a child div, so
+   scroll-behavior has to live here or it does nothing */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  @apply transition-colors duration-300; 
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes indeterminate {
+  from { transform: translateX(-110%); }
+  to   { transform: translateX(320%); }
+}
+.animate-fade-up { animation: fade-up 0.5s ease-out both; }
+.animate-scale-in { animation: scale-in 0.35s ease-out both; }
+.animate-indeterminate { animation: indeterminate 1.3s ease-in-out infinite; }
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.animate-pop-in { animation: pop-in 0.18s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-scale-in,
+  .animate-indeterminate,
+  .animate-pop-in {
+    animation: none;
+  }
+}
+
+/* Landing hero scan sweep (resume -> portfolio demo) */
+@keyframes scan-sweep {
+  0% { top: 5%; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { top: 90%; opacity: 0; }
+}
+.scan-line { animation: scan-sweep 1.5s ease-in-out infinite; }
+
+/* Scroll reveal used on the landing page */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.6, 0.25, 1), transform 0.7s cubic-bezier(0.2, 0.6, 0.25, 1);
+}
+.reveal.revealed { opacity: 1; transform: none; }
+.code-line {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.revealed .code-line { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-line { animation: none; opacity: 0; }
+  .reveal, .reveal.revealed { opacity: 1; transform: none; transition: none; }
+  .code-line { opacity: 1; transform: none; }
+}

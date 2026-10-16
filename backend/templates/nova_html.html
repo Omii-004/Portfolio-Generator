@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{name} — {title} · NOVA//SPACE</title>
+    <meta name="description" content="{summary}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root { color-scheme: dark;
+            --bg: #060A13; --pan: #0B1020; --elev: #111729; --line: #1B2540;
+            --ink: #EEF2F8; --mut: #93A0B8; --dim: #5C6B85;
+            --teal: #3EC6B4; --amber: #F5B85C; --blue: #7FB6FF; --good: #4ADE80;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+        .f-disp { font-family: 'Sora', ui-sans-serif, sans-serif; }
+        .f-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+        ::selection { background: rgba(62, 198, 180, .35); }
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-thumb { background: #22304F; border-radius: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+
+        section[id], footer[id] { scroll-margin-top: 78px; }
+        a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+            outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 4px;
+        }
+
+        .field-grid {
+            background-image:
+                linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+            background-size: 46px 46px;
+            -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 42%, #000 20%, transparent 80%);
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 42%, #000 20%, transparent 80%);
+        }
+
+        .dot-on { width: 6px; height: 6px; border-radius: 9999px; background: var(--good); display: inline-block; animation: blip 2.6s ease-in-out infinite; }
+        @keyframes blip { 0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,.5); } 50% { box-shadow: 0 0 0 6px rgba(74,222,128,0); } }
+
+        /* ---------- ROBOT ---------- */
+        .robo { animation: rise .9s cubic-bezier(.2,.7,.3,1) both; }
+        @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+
+        .arm-l { transform-box: view-box; transform-origin: 102px 206px;
+            animation: wave 3.6s ease-in-out .9s 1; }
+        @keyframes wave {
+            0%, 10% { transform: rotate(0deg); }
+            18% { transform: rotate(88deg); }
+            26% { transform: rotate(72deg); }
+            34% { transform: rotate(92deg); }
+            42% { transform: rotate(72deg); }
+            50% { transform: rotate(92deg); }
+            58% { transform: rotate(72deg); }
+            66% { transform: rotate(88deg); }
+            76%, 100% { transform: rotate(0deg); }
+        }
+
+        .head-r { transform-box: view-box; transform-origin: 150px 196px;
+            animation: sway 6s ease-in-out infinite; }
+        @keyframes sway { 0%,100% { transform: rotate(0deg); } 30% { transform: rotate(-2.2deg) translateY(1px); } 60% { transform: rotate(-2.2deg) translateY(2px); } }
+
+        .body-r { transform-box: view-box; transform-origin: 150px 288px;
+            animation: breathe 5s ease-in-out infinite; }
+        @keyframes breathe { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.02); } }
+
+        .eye { transform-box: fill-box; transform-origin: center;
+            animation: blink 4.8s ease-in-out infinite; }
+        @keyframes blink { 0%,92%,100% { transform: scaleY(1); } 95% { transform: scaleY(.09); } }
+        .eye.glow { filter: drop-shadow(0 0 6px rgba(62,198,180,.85)); }
+
+        .ant { animation: antpulse 3.2s ease-in-out infinite; }
+        @keyframes antpulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+
+        .scan { animation: scanmove 4s ease-in-out infinite; }
+        @keyframes scanmove { 0%,100% { transform: translateY(0); opacity: .1; } 50% { transform: translateY(46px); opacity: .4; } }
+
+        /* ---------- ambient particles ---------- */
+        .pt { animation: drift 8s ease-in-out infinite alternate; animation-delay: var(--d, 0s); }
+        @keyframes drift { from { transform: translate(0, -6px); opacity: .2; } to { transform: translate(6px, 8px); opacity: .8; } }
+
+        /* ---------- tech UI ---------- */
+        .btn { position: relative; display: inline-flex; align-items: center; gap: .6rem;
+            padding: .85rem 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            letter-spacing: .14em; text-transform: uppercase; color: var(--ink); border: 1px solid var(--line);
+            transition: border-color .3s, background .3s, color .3s; }
+        .btn::before, .btn::after { content: ""; position: absolute; width: 10px; height: 10px; transition: opacity .3s; pointer-events: none; }
+        .btn::before { top: -1px; left: -1px; border-top: 2px solid var(--teal); border-left: 2px solid var(--teal); }
+        .btn::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--teal); border-right: 2px solid var(--teal); }
+        .btn:hover { border-color: var(--teal); background: rgba(62,198,180,.08); }
+        .btn.ghost:hover { border-color: var(--blue); background: rgba(127,182,255,.06); }
+        .btn.ghost::before { border-color: var(--blue); } .btn.ghost::after { border-color: var(--blue); }
+
+        /* draw-on helpers (pathLength=1) */
+        .d-line { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s ease .15s; }
+        .d-line.drawn { stroke-dashoffset: 0; }
+        .r-in { opacity: 0; transform: translateY(22px) scale(.985); transition: opacity .8s ease, transform .8s ease; }
+        .r-in.in { opacity: 1; transform: none; }
+
+        /* orbit rings */
+        .orbit { opacity: 0; transform: scale(.9); transition: opacity .9s ease, transform .9s ease; }
+        .orbit.in { opacity: 1; transform: scale(1); }
+        .ring-dash { animation: spin 26s linear infinite; transform-box: view-box; transform-origin: 100px 100px; }
+        .orb-g:hover .ring-dash { animation-play-state: paused; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .orb-node { transform-box: fill-box; transform-origin: center; transition: transform .3s ease, filter .3s ease; }
+        .orb-g:hover .orb-node { transform: scale(1.45); filter: drop-shadow(0 0 8px rgba(62,198,180,.9)); }
+
+        /* project planets */
+        .planet { cursor: pointer; transform-box: fill-box; transform-origin: center; transition: transform .35s ease, filter .35s ease; }
+        .planet:hover, .planet:focus-visible { transform: scale(1.6); filter: drop-shadow(0 0 12px rgba(62,198,180,.9)); }
+        .planet.dim { opacity: .15; }
+        .pray { transition: stroke .3s ease, opacity .3s ease; }
+        .pray.lit { stroke: var(--teal); opacity: 1 !important; }
+        .pray.dim { opacity: .06; }
+        .orbit-ring-active { transition: stroke .4s ease, opacity .4s ease; }
+        .orbit-ring-active.lit { stroke: var(--teal); opacity: 1; }
+
+        /* lab terminal chrome */
+        .ter { border: 1px solid var(--line); background: rgba(17,23,41,.55); }
+        .ter:hover { border-color: rgba(62,198,180,.55); }
+
+        /* generic expandable marker */
+        details.stg summary::-webkit-details-marker { display: none; }
+        details.stg .chev { transition: transform .3s ease; }
+        details.stg[open] .chev { transform: rotate(90deg); }
+
+        /* input styling */
+        .n-input { width: 100%; background: transparent; border: 1px solid var(--line); padding: .8rem 1rem;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--ink); transition: border-color .3s; }
+        .n-input:focus { border-color: var(--teal); outline: none; }
+        .n-input::placeholder { color: var(--dim); }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .robo, .arm-l, .head-r, .body-r, .eye, .ant, .scan, .pt,
+            .dot-on, .ring-dash, .d-line, .r-in, .orbit { animation: none !important; transition: none !important; }
+            .robo { opacity: 1; transform: none; }
+            .r-in, .orbit { opacity: 1; transform: none; }
+            .d-line { stroke-dashoffset: 0; }
+            *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:z-[70] focus:left-4 focus:top-4 focus:bg-[#111729] focus:border focus:border-[#3EC6B4] focus:px-4 focus:py-2 focus:font-mono focus:text-sm">Skip to content</a>
+
+    <!-- Sticky system bar -->
+    <header class="fixed top-0 inset-x-0 z-40 border-b border-[#1B2540] bg-[#060A13]/85 backdrop-blur-md">
+        <nav class="mx-auto max-w-7xl px-5 sm:px-8 h-[60px] flex items-center justify-between gap-6" aria-label="Primary">
+            <a href="#top" class="f-disp font-bold tracking-tight text-[15px]">
+                <span class="hidden sm:inline">NOVA</span><span class="sm:hidden">N</span><span class="text-[#3EC6B4]">//</span>SPACE
+            </a>
+            <div class="f-mono flex items-center gap-4 sm:gap-6 text-[10px] sm:text-[11px] tracking-[.16em] text-[#93A0B8]">
+                <a class="hover:text-[#EEF2F8] transition-colors" href="#origin">ORIGIN</a>
+                <a class="hover:text-[#EEF2F8] transition-colors" href="#universe">UNIVERSE</a>
+                <a class="hidden md:inline hover:text-[#EEF2F8] transition-colors" href="#lab">LAB</a>
+                <a class="hidden md:inline hover:text-[#EEF2F8] transition-colors" href="#roadmap">ROADMAP</a>
+                <a class="hover:text-[#EEF2F8] transition-colors" href="#connect">CONNECT</a>
+            </div>
+            <p class="f-mono flex items-center gap-2 text-[10px] tracking-[.16em] text-[#5C6B85]">
+                <span class="dot-on" aria-hidden="true"></span><span class="hidden lg:inline">SYSTEM ONLINE</span>
+            </p>
+        </nav>
+    </header>
+
+    <main id="main" class="pt-[60px]">
+
+        <!-- ================= HERO — FULL SCREEN ================= -->
+        <section id="top" class="relative min-h-[calc(100vh-60px)] overflow-hidden flex items-center">
+            <div class="field-grid absolute inset-0" aria-hidden="true"></div>
+
+            <!-- ambient particles -->
+            <div class="absolute inset-0 hidden sm:block" aria-hidden="true">
+                <svg viewBox="0 0 1000 700" class="w-full h-full" preserveAspectRatio="xMidYMid slice">
+                    <circle class="pt" cx="120" cy="140" r="2"  fill="#3EC6B4" style="--d:.2s"/>
+                    <circle class="pt" cx="860" cy="90" r="1.5" fill="#7FB6FF" style="--d:.8s"/>
+                    <circle class="pt" cx="940" cy="330" r="2"  fill="#F5B85C" style="--d:1.4s"/>
+                    <circle class="pt" cx="80" cy="420" r="1.5" fill="#7FB6FF" style="--d:2s"/>
+                    <circle class="pt" cx="760" cy="560" r="1.8" fill="#3EC6B4" style="--d:.5s"/>
+                    <circle class="pt" cx="300" cy="620" r="1.2" fill="#5C6B85" style="--d:2.6s"/>
+                    <circle class="pt" cx="470" cy="120" r="1.2" fill="#5C6B85" style="--d:3.2s"/>
+                    <circle class="pt" cx="610" cy="430" r="1.4" fill="#3EC6B4" style="--d:1.1s"/>
+                    <rect x="180" y="60" width="8" height="1" fill="#5C6B85" class="pt" style="--d:3.8s"/>
+                    <rect x="700" y="220" width="10" height="1" fill="#5C6B85" class="pt" style="--d:4.3s"/>
+                    <path d="M0 490 C 200 430 320 520 560 470 S 860 420 1000 470" fill="none" stroke="#22304F" stroke-width="1"/>
+                    <path d="M0 560 C 260 620 520 500 780 580 S 920 600 1000 560" fill="none" stroke="#1D2A47" stroke-width="1" opacity=".7"/>
+                </svg>
+            </div>
+
+            <div class="mx-auto max-w-7xl px-5 sm:px-8 w-full grid lg:grid-cols-12 gap-6 lg:gap-4 items-center py-12 lg:py-20">
+
+                <!-- LEFT — the guide -->
+                <div class="lg:col-span-5 relative order-1">
+                    <div class="relative mx-auto max-w-[400px]">
+                        <!-- robot -->
+                        <div class="robo">
+                            <svg viewBox="0 0 300 330" class="w-full h-auto" role="img" aria-label="NOVA, a friendly AI robot guide, waves hello">
+                                <ellipse cx="150" cy="318" rx="74" ry="9" fill="#000" opacity=".45"/>
+                                <g class="arm-r" aria-hidden="true">
+                                    <line x1="198" y1="206" x2="214" y2="238" stroke="#16203A" stroke-width="12" stroke-linecap="round"/>
+                                    <line x1="214" y1="238" x2="203" y2="262" stroke="#16203A" stroke-width="12" stroke-linecap="round"/>
+                                    <circle cx="202" cy="266" r="8" fill="#3EC6B4" opacity=".9"/>
+                                </g>
+                                <g class="head-r">
+                                    <line x1="150" y1="112" x2="150" y2="86" stroke="#2A3757" stroke-width="4" stroke-linecap="round"/>
+                                    <circle class="ant" cx="150" cy="80" r="6" fill="#F5B85C"/>
+                                    <rect x="142" y="186" width="16" height="12" rx="4" fill="#16203A"/>
+                                    <rect x="110" y="104" width="80" height="86" rx="20" fill="#0E1425" stroke="#2A3757" stroke-width="2"/>
+                                    <rect x="118" y="126" width="64" height="40" rx="12" fill="#060A13" stroke="#22304F"/>
+                                    <ellipse class="eye glow" cx="140" cy="147" rx="8.5" ry="10.5" fill="#3EC6B4"/>
+                                    <ellipse class="eye glow" cx="160" cy="147" rx="8.5" ry="10.5" fill="#3EC6B4"/>
+                                    <line x1="138" y1="178" x2="150" y2="178" stroke="#2A3757" stroke-width="3" stroke-linecap="round"/>
+                                    <line x1="153" y1="178" x2="163" y2="178" stroke="#2A3757" stroke-width="3" stroke-linecap="round"/>
+                                    <circle cx="134" cy="178" r="1.5" fill="#2A3757"/>
+                                </g>
+                                <g class="body-r">
+                                    <rect x="96" y="196" width="108" height="94" rx="16" fill="#0E1425" stroke="#2A3757" stroke-width="2"/>
+                                    <rect x="96" y="196" width="108" height="12" rx="6" fill="#16203A"/>
+                                    <rect class="screen" x="114" y="216" width="72" height="56" rx="8" fill="#060A13" stroke="#22304F"/>
+                                    <rect x="120" y="226" width="42" height="5" rx="2.5" fill="#22304F"/>
+                                    <rect x="120" y="238" width="30" height="5" rx="2.5" fill="#1D2A47"/>
+                                    <rect x="120" y="250" width="50" height="5" rx="2.5" fill="#22304F"/>
+                                    <circle class="ant" cx="172" cy="262" r="3" fill="#3EC6B4"/>
+                                    <rect class="scan" x="114" y="216" width="72" height="4" fill="#3EC6B4" opacity=".18"/>
+                                </g>
+                                <g class="arm-l" aria-hidden="true">
+                                    <line x1="102" y1="206" x2="90" y2="238" stroke="#16203A" stroke-width="12" stroke-linecap="round"/>
+                                    <line x1="90" y1="238" x2="100" y2="260" stroke="#16203A" stroke-width="12" stroke-linecap="round"/>
+                                    <circle cx="101" cy="264" r="8" fill="#3EC6B4" opacity=".9"/>
+                                </g>
+                                <rect x="126" y="288" width="22" height="22" rx="6" fill="#111729" stroke="#2A3757"/>
+                                <rect x="152" y="288" width="22" height="22" rx="6" fill="#111729" stroke="#2A3757"/>
+                            </svg>
+                        </div>
+
+                        <!-- hero status chips -->
+                        <p class="absolute top-3 -left-1 sm:left-0 f-mono text-[9px] tracking-[.18em] text-[#5C6B85]" aria-hidden="true">SYSTEM <span class="text-[#4ADE80]">●</span> ONLINE</p>
+                        <p class="absolute top-8 right-0 f-mono text-[9px] tracking-[.18em] text-[#5C6B85]" aria-hidden="true">MODEL <span class="text-[#3EC6B4]">NOVA//SPACE</span></p>
+                        <p class="absolute -bottom-1 left-0 f-mono text-[9px] tracking-[.18em] text-[#5C6B85]" aria-hidden="true">MODE <span class="text-[#F5B85C]">EXPLORATION</span></p>
+                        <p class="absolute bottom-4 right-1 f-mono text-[9px] tracking-[.18em] text-[#5C6B85]" aria-hidden="true">STATUS <span class="text-[#4ADE80]">READY</span></p>
+                    </div>
+                </div>
+
+                <!-- RIGHT — identity -->
+                <div class="lg:col-span-7 order-2 lg:pl-10">
+                    <p class="f-mono text-[11px] tracking-[.24em] text-[#3EC6B4]">NOVA//SPACE · GUIDE MISSION 01</p>
+                    <h1 class="f-disp mt-5 text-5xl sm:text-6xl lg:text-7xl font-bold leading-[.98] tracking-[-.02em]">{name}</h1>
+                    <p class="f-mono mt-5 text-[11px] tracking-[.24em] text-[#93A0B8]">{title}</p>
+                    <p class="f-mono mt-2 text-[11px] tracking-[.24em] text-[#5C6B85]">BUILDER · RESEARCHER · EXPLORER</p>
+                    <p class="mt-7 max-w-lg text-[15px] leading-[1.8] text-[#93A0B8]">{summary}</p>
+                    <div class="mt-10 flex flex-wrap gap-4">
+                        <a href="#universe" class="btn">Explore My Work</a>
+                        <a href="#lab" class="btn ghost">Research Log</a>
+                    </div>
+                    <p class="f-mono mt-12 text-[9px] tracking-[.2em] text-[#5C6B85]" aria-hidden="true">COORD&nbsp; <span class="text-[#F5B85C]">+47.3769°N</span> &nbsp;·&nbsp; BUILD 2026.01</p>
+                </div>
+            </div>
+
+            <!-- scroll cue -->
+            <a href="#origin" class="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 f-mono text-[9px] tracking-[.24em] text-[#5C6B85] hover:text-[#3EC6B4] transition-colors" aria-label="Scroll to the origin section">
+                ENTER THE SPACE
+                <svg width="14" height="18" viewBox="0 0 14 18" fill="none" class="animate-bounce" aria-hidden="true"><path d="M7 1v12M2 9l5 6 5-6" stroke="currentColor" stroke-width="1.5"/></svg>
+            </a>
+        </section>
+
+        <!-- ================= ORIGIN ================= -->
+        {section_origin}
+
+        <!-- ================= AI CONSTELLATION ================= -->
+        {section_constellation}
+
+        <!-- ================= PROJECT UNIVERSE ================= -->
+        {section_universe}
+
+        <!-- ================= THE LAB ================= -->
+        {section_lab}
+
+        <!-- ================= MODEL TRAINING ROADMAP ================= -->
+        {section_roadmap}
+
+        <!-- ================= HOW I BUILD ================= -->
+        {section_build}
+
+        <!-- ================= TECH ECOSYSTEM ================= -->
+        {section_ecosystem}
+
+        <!-- ================= CURRENT STATE ================= -->
+        {section_state}
+
+        <!-- ================= NEXT VECTOR ================= -->
+        {section_vector}
+
+        <!-- ================= OPEN CONNECTION ================= -->
+        {section_connect}
+
+        <!-- ================= THE GUIDE RETURNS ================= -->
+        {section_guide}
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer id="footer" class="border-t border-[#1B2540]">
+        <div class="mx-auto max-w-7xl px-5 sm:px-8 py-14 flex flex-col md:flex-row md:items-end justify-between gap-10">
+            <div>
+                <p class="f-disp text-xl font-bold tracking-tight">NOVA<span class="text-[#3EC6B4]">//</span>SPACE</p>
+                <p class="f-mono mt-3 text-[10px] tracking-[.2em] text-[#5C6B85]">EXPLORE THE SPACE BETWEEN DATA AND INTELLIGENCE.</p>
+            </div>
+            <div class="f-mono flex flex-wrap gap-x-8 gap-y-3 text-[11px] tracking-[.16em] text-[#93A0B8]">
+                {footer_links}
+            </div>
+            <div class="f-mono flex items-center gap-2 text-[10px] tracking-[.16em] text-[#5C6B85]">
+                <span class="dot-on" aria-hidden="true"></span>SYSTEM ONLINE
+                <span class="ml-2 text-[#3EC6B4]">© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project detail panel (system scan) -->
+    <div id="n-backdrop" class="fixed inset-0 z-50 bg-black/70 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <aside id="n-drawer" class="fixed top-0 right-0 z-[55] h-full w-full sm:w-[470px] max-w-full overflow-y-auto border-l border-[#1B2540] bg-[#0B1020] translate-x-full transition-transform duration-500" role="dialog" aria-modal="true" aria-labelledby="n-title">
+        <div class="sticky top-0 z-10 flex items-center justify-between border-b border-[#1B2540] bg-[#0B1020] px-6 py-4">
+            <span id="n-title" class="f-mono text-[10px] tracking-[.22em] text-[#3EC6B4]">SCANNING_OBJECT</span>
+            <button id="n-close" class="f-mono text-[11px] text-[#93A0B8] hover:text-[#EEF2F8] transition-colors" aria-label="Close system scan panel">[ CLOSE ]</button>
+        </div>
+        <div id="n-body" class="p-6 sm:p-8"></div>
+    </aside>
+    <div id="n-tip" class="hidden fixed z-[60] pointer-events-none border border-[#1B2540] bg-[#111729] px-3 py-2"></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true, offset: 60,
+            disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches });
+
+        (function () {
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            /* Reveal on scroll: orbits, ecosystem zones, build stages */
+            var io = 'IntersectionObserver' in window && !reduce ? new IntersectionObserver(function (es) {
+                es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+            }, { threshold: .25 }) : null;
+            document.querySelectorAll('.r-in, .orbit').forEach(function (el) {
+                if (io) io.observe(el); else el.classList.add('in');
+            });
+
+            /* Draw-on paths throughout the page */
+            var dio = 'IntersectionObserver' in window && !reduce ? new IntersectionObserver(function (es) {
+                es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('drawn'); dio.unobserve(en.target); } });
+            }, { threshold: .3 }) : null;
+            document.querySelectorAll('.d-line').forEach(function (el) {
+                if (dio) dio.observe(el); else el.classList.add('drawn');
+            });
+
+            /* ---- Project universe ---- */
+            var field = document.querySelector('.nu-field');
+            if (field) {
+                var nodes = field.querySelectorAll('.planet');
+                var rays = field.querySelectorAll('.pray');
+                var arcs = field.querySelectorAll('.orbit-ring-active');
+                var tip = document.getElementById('n-tip');
+                var drawer = document.getElementById('n-drawer');
+                var backdrop = document.getElementById('n-backdrop');
+                var bodyEl = document.getElementById('n-body');
+                var close = document.getElementById('n-close');
+
+                function stColor(s) {
+                    s = (s || '').toLowerCase();
+                    if (/(deploy|live|online|active|build|in progress|wip)/.test(s)) return '#4ADE80';
+                    if (/(complete|done|ship|released|archived|graduat)/.test(s)) return '#22D3EE';
+                    return '#5C6B85';
+                }
+                function pick(n, show) {
+                    nodes.forEach(function (x) { x.classList.toggle('dim', show && x.dataset.id !== n.dataset.id); });
+                    rays.forEach(function (r) { r.classList.toggle('lit', show && r.dataset.src === n.dataset.id); r.classList.toggle('dim', show && r.dataset.src !== n.dataset.id); });
+                    arcs.forEach(function (a) { a.classList.toggle('lit', show && a.dataset.src === n.dataset.id); });
+                }
+
+                function openScan(el) {
+                    var chips = (el.dataset.stack || '').split(',').filter(Boolean)
+                        .map(function (t) { return '<span class="f-mono border border-[#1B2540] px-2.5 py-1 text-[10px] text-[#93A0B8] rounded-sm">' + t.trim() + '</span>'; }).join(' ');
+                    var link = el.dataset.link && el.dataset.link !== '#'
+                        ? '<a class="btn" href="' + el.dataset.link + '" target="_blank" rel="noopener">Source Code</a>' : '';
+                    var pipe = '<div class="mt-8 f-mono text-[9px] tracking-[.08em] text-[#5C6B85] flex flex-wrap items-center gap-2">'
+                        + ['INPUT', 'FEATURES', 'MODEL', 'INFERENCE', 'OUTPUT'].map(function (s, i) {
+                            return (i ? '<span aria-hidden="true">&rarr;</span>' : '') + '<span class="border border-[#1B2540] px-2 py-1">' + s + '</span>';
+                        }).join('') + '</div>';
+                    var st = stColor(el.dataset.status);
+                    bodyEl.innerHTML =
+                        '<p class="f-mono text-[10px] tracking-[.22em] text-[#5C6B85]">PROJECT / ' + el.dataset.index + '</p>' +
+                        '<h3 class="f-disp mt-3 text-3xl tracking-tight">' + el.dataset.name + '</h3>' +
+                        '<p class="f-mono mt-1 text-[10px] tracking-[.18em] text-[#3EC6B4]">' + (el.dataset.type || 'AI SYSTEM') + '</p>' +
+                        '<div class="f-mono mt-6 divide-y divide-[#1B2540] border-y border-[#1B2540]">'
+                        + '<div class="flex justify-between py-3 text-[11px]"><span class="text-[#5C6B85]">YEAR</span><span>' + (el.dataset.year || '—') + '</span></div>'
+                        + '<div class="flex justify-between items-center py-3 text-[11px]"><span class="text-[#5C6B85]">STATUS</span><span class="flex items-center gap-2" style="color:' + st + '"><span class="dot-on" style="background:' + st + '"></span>' + (el.dataset.status || 'LOGGED') + '</span></div>'
+                        + '</div>'
+                        + (el.dataset.desc ? '<p class="mt-7 text-[14px] leading-relaxed text-[#93A0B8]">' + el.dataset.desc + '</p>' : '')
+                        + (chips ? '<div class="mt-7 flex flex-wrap gap-2">' + chips + '</div>' : '')
+                        + pipe
+                        + (link ? '<div class="mt-8">' + link + '</div>' : '');
+                    drawer.classList.remove('translate-x-full'); drawer.classList.add('translate-x-0');
+                    backdrop.classList.add('opacity-100'); backdrop.classList.remove('opacity-0', 'pointer-events-none');
+                    document.body.classList.add('overflow-hidden');
+                    close.focus();
+                }
+
+                nodes.forEach(function (n) {
+                    n.addEventListener('mouseenter', function () {
+                        pick(n, true);
+                        if (reduce) return;
+                        tip.innerHTML = '<span class="f-mono text-[10px] tracking-[.1em] text-[#3EC6B4]">' + n.dataset.name + '</span>';
+                        tip.classList.remove('hidden');
+                    });
+                    n.addEventListener('mousemove', function (e) {
+                        var x = e.clientX + 14, y = e.clientY + 12;
+                        tip.style.left = (x + tip.offsetWidth > innerWidth ? x - tip.offsetWidth - 26 : x) + 'px';
+                        tip.style.top = (y + tip.offsetHeight > innerHeight ? y - tip.offsetHeight - 12 : y) + 'px';
+                    });
+                    n.addEventListener('mouseleave', function () { pick(n, false); tip.classList.add('hidden'); });
+                    n.addEventListener('focus', function () { pick(n, true); });
+                    n.addEventListener('blur', function () { pick(n, false); });
+                    n.addEventListener('click', function () { pick(this, false); tip.classList.add('hidden'); openScan(this); });
+                    n.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); this.click(); } });
+                });
+
+                function closeScan() {
+                    drawer.classList.add('translate-x-full'); drawer.classList.remove('translate-x-0');
+                    backdrop.classList.add('opacity-0', 'pointer-events-none');
+                    document.body.classList.remove('overflow-hidden');
+                }
+                close.addEventListener('click', closeScan);
+                backdrop.addEventListener('click', closeScan);
+                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeScan(); });
+            }
+
+            /* ---- Guide return: re-wave on view ---- */
+            var robo2 = document.querySelector('.robo-return');
+            if (robo2 && 'IntersectionObserver' in window && !reduce) {
+                var rio = new IntersectionObserver(function (es) {
+                    es.forEach(function (en) {
+                        if (!en.isIntersecting) return;
+                        var arm = robo2.querySelector('.arm-l');
+                        if (arm) { arm.style.animation = 'none'; void arm.offsetWidth; arm.style.animation = ''; }
+                        rio.disconnect();
+                    });
+                }, { threshold: .4 });
+                rio.observe(robo2);
+            }
+
+            /* ---- Open connection form (mailto channel) ---- */
+            var form = document.getElementById('nc-form');
+            if (form) {
+                var status = document.getElementById('nc-status');
+                var btn = document.getElementById('nc-send');
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var fd = new FormData(form);
+                    var body = 'Name: ' + fd.get('name') + '\nEmail: ' + fd.get('email') + '\n\n' + fd.get('message');
+                    var href = 'mailto:' + (form.dataset.to || '') + '?subject=' + encodeURIComponent('Connection request from ' + (fd.get('name') || 'visitor')) + '&body=' + encodeURIComponent(body);
+                    if (!reduce) {
+                        btn.disabled = true;
+                        btn.textContent = 'Encoding channel…';
+                        status.classList.remove('hidden');
+                        var steps = status.children, k = 0;
+                        var t = setInterval(function () {
+                            if (k < steps.length) { steps[k].classList.remove('opacity-0'); k++; }
+                            else { clearInterval(t); btn.textContent = '[ RESEND QUERY ]'; btn.disabled = false; }
+                        }, 650);
+                    }
+                    window.location.href = href;
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

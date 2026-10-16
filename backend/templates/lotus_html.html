@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{name} — Creative Portfolio</title>
+  <meta name="description" content="{summary}" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <style>
+    :root {
+      --ink: #30252A;
+      --body: #6F5E64;
+      --muted: #8A7179;
+      --rose: #A9576B;
+      --rose2: #D98C9B;
+      --line: #EBDDD7;
+      --cream: #FFF9F7;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .font-editorial { font-family: 'Playfair Display', Georgia, serif; }
+    .lotus-eyebrow {
+      font-size: 11px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--rose);
+      font-weight: 600;
+    }
+    .lotus-eyebrow::before {
+      content: "";
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: var(--rose2);
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+    section[id] { scroll-margin-top: 96px; }
+    ::selection { background: #F8E4E8; color: var(--ink); }
+    :focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; }
+
+    .u-link {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1px;
+      background-repeat: no-repeat;
+      background-position: 0 100%;
+      transition: background-size .45s ease;
+      padding-bottom: 2px;
+    }
+    .u-link:hover { background-size: 100% 1px; }
+
+    .petal-spin { animation: lotus-spin 70s linear infinite; }
+    .petal-spin-rev { animation: lotus-spin 55s linear infinite reverse; }
+    @keyframes lotus-spin { to { transform: rotate(360deg); } }
+
+    .petal-drift {
+      animation: petal-drift 9s ease-in-out infinite;
+    }
+    @keyframes petal-drift {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(6deg); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .petal-spin, .petal-spin-rev, .petal-drift { animation: none; }
+    }
+  </style>
+</head>
+<body class="bg-[#FFF9F7] text-[#30252A]">
+  <a href="#top" class="sr-only focus:not-sr-only focus:fixed focus:inset-x-0 focus:top-0 focus:z-[100] focus:bg-[#30252A] focus:text-[#FFF9F7] focus:px-6 focus:py-3 focus:text-center">Skip to content</a>
+
+  <!-- Left editorial rail (desktop) -->
+  <aside class="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col justify-between border-r border-[#EBDDD7] px-9 py-10 z-40 bg-[#FFF9F7]">
+    <div>
+      <a href="#top" class="block font-editorial text-2xl leading-none tracking-tight text-[#30252A]">
+        LOTUS<span class="italic text-[#A9576B]">//BLOOM</span>
+      </a>
+      <nav aria-label="Primary" class="mt-14 flex flex-col gap-5">
+        <a href="#about" class="u-link text-[12px] uppercase tracking-[.2em] text-[#6F5E64] hover:text-[#A9576B] transition-colors">01 &nbsp;About</a>
+        <a href="#blooms" class="u-link text-[12px] uppercase tracking-[.2em] text-[#6F5E64] hover:text-[#A9576B] transition-colors">02 &nbsp;Selected Blooms</a>
+        <a href="#expertise" class="u-link text-[12px] uppercase tracking-[.2em] text-[#6F5E64] hover:text-[#A9576B] transition-colors">03 &nbsp;Expertise</a>
+        <a href="#journey" class="u-link text-[12px] uppercase tracking-[.2em] text-[#6F5E64] hover:text-[#A9576B] transition-colors">04 &nbsp;Bloom Journey</a>
+        <a href="#philosophy" class="u-link text-[12px] uppercase tracking-[.2em] text-[#6F5E64] hover:text-[#A9576B] transition-colors">05 &nbsp;Philosophy</a>
+        <a href="#contact" class="u-link text-[12px] uppercase tracking-[.2em] text-[#A9576B] font-medium">06 &nbsp;Contact</a>
+      </nav>
+    </div>
+    <p class="text-[11px] uppercase tracking-[.2em] text-[#8A7179]">&#169; 2026 &middot; {name}</p>
+  </aside>
+
+  <!-- Mobile top bar -->
+  <header class="lg:hidden sticky top-0 z-40 flex items-center justify-between border-b border-[#EBDDD7] bg-[#FFF9F7]/90 backdrop-blur px-5 py-4">
+    <a href="#top" class="font-editorial text-lg leading-none tracking-tight text-[#30252A]">LOTUS<span class="italic text-[#A9576B]">//BLOOM</span></a>
+    <nav aria-label="Primary" class="flex gap-4">
+      <a href="#about" class="text-[10px] uppercase tracking-[.15em] text-[#6F5E64] hover:text-[#A9576B]">About</a>
+      <a href="#blooms" class="text-[10px] uppercase tracking-[.15em] text-[#6F5E64] hover:text-[#A9576B]">Blooms</a>
+      <a href="#expertise" class="text-[10px] uppercase tracking-[.15em] text-[#6F5E64] hover:text-[#A9576B]">Expertise</a>
+      <a href="#journey" class="text-[10px] uppercase tracking-[.15em] text-[#6F5E64] hover:text-[#A9576B]">Journey</a>
+      <a href="#contact" class="text-[10px] uppercase tracking-[.15em] text-[#A9576B]">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top" class="lg:pl-64">
+    <!-- HERO — magazine cover -->
+    <header class="relative px-6 sm:px-10 lg:px-16 pt-14 lg:pt-10 lg:min-h-screen flex flex-col">
+      <div class="flex items-center justify-between border-b border-[#EBDDD7] pb-6 text-[11px] uppercase tracking-[.22em] text-[#8A7179]">
+        <span>Creative Portfolio</span>
+        <span class="hidden sm:inline">&#8470; 01 &mdash; 2026</span>
+        <span>{title}</span>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-10 flex-1 items-center py-16 md:py-24">
+        <div data-aos="fade-up">
+          <p class="lotus-eyebrow">Portfolio &mdash; {title}</p>
+          <h1 class="font-editorial text-6xl sm:text-7xl lg:text-8xl leading-[1.02] tracking-tight mt-6 text-[#30252A]">
+            <em class="italic text-[#A9576B]">Hello,</em><br />I&rsquo;m {name}
+          </h1>
+          <p class="mt-8 max-w-xl text-[17px] leading-relaxed text-[#6F5E64]">{summary}</p>
+          <div class="mt-10 flex flex-wrap items-center gap-8">
+            <a href="#blooms" class="u-link text-[13px] uppercase tracking-[.2em] font-semibold text-[#A9576B]">View selected blooms &darr;</a>
+            <a href="mailto:{email}" class="inline-block border border-[#A9576B]/60 px-7 py-3 text-[13px] uppercase tracking-[.2em] font-semibold text-[#A9576B] hover:bg-[#A9576B] hover:text-[#FFF9F7] transition-colors">Get in touch</a>
+          </div>
+        </div>
+
+        <div class="relative flex items-center justify-center py-10 lg:py-0" data-aos="fade-up" data-aos-delay="150">
+          <div class="relative h-72 w-72 sm:h-96 sm:w-96">
+            <div class="absolute inset-0 rounded-full bg-[#F8E4E8]/90" aria-hidden="true"></div>
+            <svg class="petal-spin absolute inset-[6%] text-[#A9576B]/30" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true"><path d="M32 58C32 46 22 34 32 18C42 34 32 46 32 58Z"/><path d="M32 58C40 46 48 35 52 22C43 31 37 44 32 58Z"/><path d="M32 58C24 46 16 35 12 22C21 31 27 44 32 58Z"/></svg>
+            <svg class="petal-spin-rev absolute inset-[22%] text-[#D98C9B]/60" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true"><path d="M32 58C32 46 22 34 32 18C42 34 32 46 32 58Z"/><path d="M32 58C40 46 48 35 52 22C43 31 37 44 32 58Z"/><path d="M32 58C24 46 16 35 12 22C21 31 27 44 32 58Z"/></svg>
+            <div class="absolute inset-[37%] rounded-full border border-[#A9576B]/30 flex items-center justify-center">
+              <span class="font-editorial italic text-2xl text-[#A9576B]">lotus</span>
+            </div>
+            <span class="petal-drift absolute -top-3 right-4 w-10 text-[#D98C9B]/70" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1"><path d="M32 58C32 46 22 34 32 18C42 34 32 46 32 58Z"/></svg></span>
+            <span class="petal-drift absolute -bottom-2 left-6 w-7 text-[#A9B9A3]/70" style="animation-delay:-3s" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1"><path d="M32 58C32 46 22 34 32 18C42 34 32 46 32 58Z"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    {section_about}
+
+    {section_projects}
+
+    {section_skills}
+
+    {section_journey}
+
+    <!-- PHILOSOPHY -->
+    <section id="philosophy" class="px-6 sm:px-10 lg:px-16 mb-24 md:mb-36">
+      <div class="relative max-w-4xl mx-auto text-center py-24 md:py-32 border-y border-[#EBDDD7]" data-aos="fade-up">
+        <svg class="mx-auto mb-8 h-9 w-9 text-[#A9B9A3]" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="0.8" aria-hidden="true"><path d="M32 58C32 46 22 34 32 18C42 34 32 46 32 58Z"/><path d="M32 58C40 46 48 35 52 22C43 31 37 44 32 58Z"/><path d="M32 58C24 46 16 35 12 22C21 31 27 44 32 58Z"/></svg>
+        <p class="lotus-eyebrow">05 / Philosophy</p>
+        <blockquote class="font-editorial italic text-3xl md:text-5xl leading-[1.15] mt-8 text-[#30252A]">
+          &ldquo;Growth is quiet.<br />It shows up in <span class="text-[#A9576B]">bloom</span>.&rdquo;
+        </blockquote>
+        <p class="mt-10 mx-auto max-w-xl text-[16px] leading-relaxed text-[#6F5E64]">{summary}</p>
+        <p class="mt-8 text-[11px] uppercase tracking-[.24em] text-[#A9576B]">&mdash; {name}</p>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="px-6 sm:px-10 lg:px-16 mb-24 md:mb-36" data-aos="fade-up">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-6">
+          <p class="lotus-eyebrow">06 / Contact</p>
+          <h2 class="font-editorial text-4xl md:text-6xl leading-[1.08] tracking-tight mt-5 text-[#30252A]">
+            Let&rsquo;s grow something <em class="italic text-[#A9576B]">together</em>
+          </h2>
+          <p class="mt-8 max-w-md text-[17px] leading-relaxed text-[#6F5E64]">
+            Whether it&rsquo;s a new collaboration, a curious note, or just a hello &mdash; my inbox is always open.
+          </p>
+          <div class="mt-4 border-b border-[#EBDDD7]">
+            {lotus_contact_rows}
+          </div>
+        </div>
+        <div class="lg:col-span-6 lg:pl-8">
+          <div class="relative border border-[#EBDDD7] p-8 md:p-12 bg-white">
+            <p class="lotus-eyebrow">Current chapter</p>
+            <p class="font-editorial text-3xl md:text-4xl mt-5 leading-snug text-[#30252A]">
+              Open to <em class="italic text-[#A9576B]">meaningful</em> creative collaborations
+            </p>
+            <div class="mt-8 flex items-center gap-3">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="absolute inline-flex h-full w-full rounded-full bg-[#A9B9A3] opacity-75 animate-ping"></span>
+                <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#A9B9A3]"></span>
+              </span>
+              <span class="text-[12px] uppercase tracking-[.2em] text-[#8A7179]">Available for select projects</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-6 sm:px-10 lg:px-16 py-14 border-t border-[#EBDDD7] text-center">
+      <a href="#top" class="font-editorial text-2xl text-[#30252A]">LOTUS<span class="italic text-[#A9576B]">//BLOOM</span></a>
+      <p class="mt-4 text-[12px] uppercase tracking-[.2em] text-[#8A7179]">&#169; 2026 {name} &mdash; Crafted with intention.</p>
+    </footer>
+  </main>
+
+  <script>
+    AOS.init({
+      duration: 700,
+      offset: 80,
+      once: true,
+      disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    });
+  </script>
+</body>
+</html>
