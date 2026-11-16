@@ -61,7 +61,7 @@ function App() {
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950 font-sans transition-colors duration-300">
+          <div className="min-h-screen flex flex-col bg-beige dark:bg-plum font-sans transition-colors duration-300">
             <Chrome />
           </div>
         </Router>
